@@ -435,7 +435,7 @@ const TV = () => {
                 ref={video}
                 width={getWidth()}
                 height={getHeight()}
-                preload="none"
+                preload="auto"
                 onLoadedMetadata={handleLoadedMetaData}
             ></video>
         </div>

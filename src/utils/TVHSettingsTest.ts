@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import TVHDataService from '../services/TVHDataService';
 import WebOSService from '../services/WebOSService';
 

@@ -1,9 +1,9 @@
 import FileServiceAdapter from '../luna/FileServiceAdapter';
 import HttpProxyServiceAdapter from '../luna/HttpProxyServiceAdapter';
 import LunaServiceAdapter from '../luna/LunaServiceAdapter';
-import MockFileServiceAdapter from '../mock/MockFileServiceAdapter';
-import MockHttpProxyServiceAdapter from '../mock/MockHttpProxyServiceAdapter';
-import MockLunaServiceAdapter from '../mock/MockLunaServiceAdapter';
+//import MockFileServiceAdapter from '../mock/MockFileServiceAdapter';
+//import MockHttpProxyServiceAdapter from '../mock/MockHttpProxyServiceAdapter';
+//import MockLunaServiceAdapter from '../mock/MockLunaServiceAdapter';
 
 const Config: Configuration = {
     // prod config

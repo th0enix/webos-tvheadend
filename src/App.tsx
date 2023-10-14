@@ -95,7 +95,7 @@ const App = () => {
                 preloadImages(channels);
 
                 // retrieve epg and update channels
-                tvhDataService.retrieveTVHEPG(0, (channels) => {
+                tvhDataService.retrieveTVHEPG((channels) => {
                     // note: channels are already updated as we are working on references here
                     epgData.updateChannels(channels);
                 });

@@ -81,7 +81,7 @@ interface EPGCallback<T extends EPGChannel | EPGChannelRecording = EPGChannel> {
 export default class TVHDataService {
     static API_SERVER_INFO = 'api/serverinfo';
     static API_EPG_TEST = 'api/epg/events/grid?dir=ASC&sort=start&limit=1&start=0';
-    static API_EPG = 'api/epg/events/grid?dir=ASC&sort=start&limit=500&start=';
+    static API_EPG = 'api/epg/events/grid?dir=ASC&sort=start&limit=2147483648';
     static API_DVR_CONFIG = 'api/dvr/config/grid';
     static API_DVR_CREATE_BY_EVENT = 'api/dvr/entry/create_by_event?';
     static API_DVR_CANCEL = 'api/dvr/entry/cancel?uuid=';
@@ -95,7 +95,6 @@ export default class TVHDataService {
     private httpProxyServiceAdapter = Config.httpProxyServiceAdapter;
     private epgCacheService = new EPGCacheService();
     private webosService = new WebOSService();
-    private maxTotalEpgEntries = 10000;
     private channels: EPGChannel[] = [];
     private url?: string;
     // private profile: string;
@@ -435,21 +434,17 @@ export default class TVHDataService {
         });
     }
 
-    retrieveTVHEPG(start: number, callback: EPGCallback) {
-        let totalCount = 0;
-
+    retrieveTVHEPG(callback: EPGCallback) {
         return this.httpProxyServiceAdapter
             .call<TVHEvents>({
-                url: this.url + TVHDataService.API_EPG + start,
+                url: this.url + TVHDataService.API_EPG,
                 user: this.user,
                 password: this.password
             })
             .then((response) => {
-                console.log('epg events received: %d of %d', start + response.entries.length, response.totalCount);
+                console.log('epg events received: %d of %d', response.entries.length, response.totalCount);
                 if (response.entries.length > 0) {
-                    totalCount = response.totalCount;
                     response.entries.forEach((tvhEvent) => {
-                        start++;
                         this.channels
                             .find((channel) => channel.getUUID() == tvhEvent.channelUuid)
                             ?.addEvent(this.toEpgEvent(tvhEvent));
@@ -458,12 +453,6 @@ export default class TVHDataService {
 
                 // notify calling component
                 callback(this.channels);
-
-                // retrieve next increment
-                if (start < this.maxTotalEpgEntries && totalCount > start) {
-                    this.retrieveTVHEPG(start, callback);
-                    return;
-                }
                 console.log('processed all epg events');
 
                 try {
