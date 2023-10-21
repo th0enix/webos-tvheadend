@@ -27,7 +27,8 @@ function proxy(message) {
         host: parsedURL.hostname,
         port: parsedURL.port,
         path: parsedURL.path,
-        method: message.payload.method || 'GET'
+        method: message.payload.method || 'GET',
+        timeout: 5000,
     };
 
     request(options, user, password, message);

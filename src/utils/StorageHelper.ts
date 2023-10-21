@@ -14,6 +14,10 @@ export default class StorageHelper {
         localStorage.setItem(STORAGE_TVH_SETTING_KEY, JSON.stringify(settings));
     };
 
+    static clearTvhSettings = () => {
+        localStorage.removeItem(STORAGE_TVH_SETTING_KEY);
+    };
+
     static getLastChannelIndex = (): number => {
         const indexStr = localStorage.getItem(STORAGE_KEY_LAST_CHANNEL);
         return (indexStr && parseInt(indexStr)) || 0;

@@ -104,6 +104,9 @@ const App = () => {
                 tvhDataService.retrieveUpcomingRecordings((recordings) => {
                     epgData.updateRecordings(recordings);
                 });
+            }).catch(() => {
+                setAppViewState(AppViewState.SETTINGS);
+                return
             });
 
             setAppViewState(AppViewState.TV);
