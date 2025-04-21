@@ -25,7 +25,7 @@ const ChannelList = (props: {
     toggleRecording: (event: EPGEvent, callback: () => unknown) => void;
     unmount: () => void;
 }) => {
-    const { epgData, imageCache, currentChannelPosition, setCurrentChannelPosition, isAnimationsEnabled } = useContext(
+    const { epgData, currentChannelPosition, setCurrentChannelPosition, isAnimationsEnabled } = useContext(
         AppContext
     );
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -43,7 +43,7 @@ const ChannelList = (props: {
     const mChannelLayoutNumberTextSize = 38;
     const mChannelLayoutTextColor = '#cccccc';
     const mChannelLayoutTitleTextColor = '#969696';
-    const mChannelLayoutMargin = 3;
+    //const mChannelLayoutMargin = 3;
     const mChannelLayoutPadding = 7;
     const mChannelLayoutHeight = 90;
     const mChannelLayoutWidth = 900;
@@ -256,49 +256,6 @@ const ChannelList = (props: {
                 }
             );
         }
-
-        // channel logo
-        const imageURL = channel.getImageURL();
-        const image = imageURL && imageCache.get(imageURL);
-        if (image !== undefined) {
-            const channelImageRect = getDrawingRectForChannelImage(position, image);
-            canvas.drawImage(
-                image,
-                channelImageRect.left,
-                channelImageRect.top,
-                channelImageRect.width,
-                channelImageRect.height
-            );
-            IS_DEBUG && CanvasUtils.drawDebugRect(canvas, channelImageRect);
-        }
-    };
-
-    const getDrawingRectForChannelImage = (position: number, image: HTMLImageElement) => {
-        const drawingRect = new Rect();
-        drawingRect.right = mChannelLayoutWidth - mChannelLayoutMargin;
-        drawingRect.left = drawingRect.right - mChannelLayoutHeight * 1.3;
-        drawingRect.top = getTopFrom(position);
-        drawingRect.bottom = drawingRect.top + mChannelLayoutHeight;
-
-        const imageWidth = image.width;
-        const imageHeight = image.height;
-        const imageRatio = imageHeight / imageWidth;
-
-        const rectWidth = drawingRect.right - drawingRect.left;
-        const rectHeight = drawingRect.bottom - drawingRect.top;
-
-        // Keep aspect ratio.
-        if (imageWidth > imageHeight) {
-            const padding = (rectHeight - rectWidth * imageRatio) / 2;
-            drawingRect.top += padding;
-            drawingRect.bottom -= padding;
-        } else if (imageWidth <= imageHeight) {
-            const padding = (rectWidth - rectHeight / imageRatio) / 2;
-            drawingRect.left += padding;
-            drawingRect.right -= padding;
-        }
-
-        return drawingRect;
     };
 
     /**

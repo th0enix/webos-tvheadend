@@ -356,7 +356,7 @@ const Player = () => {
                 ref={video}
                 width={getWidth()}
                 height={getHeight()}
-                preload="auto"
+                preload="none"
                 controls
                 onLoadedMetadata={handleLoadedMetaData}
             ></video>

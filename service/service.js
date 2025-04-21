@@ -3,7 +3,7 @@ const httpProxyHandler = require('./httpproxyhandler');
 const Service = require('webos-service');
 
 // create webos service
-var service = new Service('com.willinux.tvh.app.proxy');
+var service = new Service('com.tvh.app.proxy');
 service.activityManager.idleTimeout = 300;
 
 // keep service alive 

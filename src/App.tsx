@@ -5,7 +5,7 @@ import Player from './components/Player';
 import TVHSettings from './components/TVHSettings';
 import './styles/app.css';
 import AppContext, { AppVisibilityState } from './AppContext';
-import EPGChannel from './models/EPGChannel';
+//import EPGChannel from './models/EPGChannel';
 import StorageHelper from './utils/StorageHelper';
 import Menu, { MenuItem } from './components/Menu';
 
@@ -28,7 +28,7 @@ const App = () => {
         tvhDataService,
         setTvhDataService,
         epgData,
-        imageCache,
+        //imageCache,
         setPersistentAuthToken,
         setAnimationsEnabled
     } = useContext(AppContext);
@@ -92,10 +92,10 @@ const App = () => {
                     safePersistentAuthToken(channels[0].getStreamUrl());
                 }
                 // preload images
-                preloadImages(channels);
+                //preloadImages(channels);
 
                 // retrieve epg and update channels
-                tvhDataService.retrieveTVHEPG((channels) => {
+                tvhDataService.retrieveTVHEPG(0, (channels) => {
                     // note: channels are already updated as we are working on references here
                     epgData.updateChannels(channels);
                 });
@@ -151,20 +151,20 @@ const App = () => {
      * preload all images and set placeholders
      * if images cannot be loaded
      */
-    const preloadImages = (channels: EPGChannel[]) => {
-        channels.forEach((channel) => {
-            const imageURL = channel.getImageURL();
-            // logo url is optional
-            if (!imageURL) {
-                return;
-            }
-            const img = new Image();
-            img.src = imageURL.toString();
-            img.onload = () => {
-                imageCache.set(imageURL, img);
-            };
-        });
-    };
+    //const preloadImages = (channels: EPGChannel[]) => {
+    //    channels.forEach((channel) => {
+    //        const imageURL = channel.getImageURL();
+    //        // logo url is optional
+    //        if (!imageURL) {
+    //            return;
+    //        }
+    //        const img = new Image();
+    //        img.src = imageURL.toString();
+    //        img.onload = () => {
+    //            imageCache.set(imageURL, img);
+    //        };
+    //    });
+    //};
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
         const keyCode = event.keyCode;
@@ -172,6 +172,7 @@ const App = () => {
         switch (keyCode) {
             case 404: // green button
             case 71: //'g'
+            case 39: // right key for special remotes
                 event.stopPropagation();
                 setMenuState(!menuState);
                 break;

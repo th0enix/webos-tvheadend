@@ -6,7 +6,7 @@ import AppContext from '../AppContext';
 import '../styles/app.css';
 
 const ChannelInfo = (props: { unmount: () => void }) => {
-    const { locale, epgData, imageCache, currentChannelPosition } = useContext(AppContext);
+    const { locale, epgData, currentChannelPosition } = useContext(AppContext);
 
     const canvas = useRef<HTMLCanvasElement>(null);
     const infoWrapper = useRef<HTMLDivElement>(null);
@@ -45,7 +45,7 @@ const ChannelInfo = (props: { unmount: () => void }) => {
 
     const drawChannelInfo = (canvas: CanvasRenderingContext2D) => {
         // Background
-        let drawingRect = new Rect();
+        const drawingRect = new Rect();
         drawingRect.left = 0;
         drawingRect.top = 0;
         drawingRect.right = getWidth();
@@ -93,26 +93,26 @@ const ChannelInfo = (props: { unmount: () => void }) => {
         // canvas.fillText(channel.getChannelID(), drawingRect.left, drawingRect.top);
 
         // channel name
-        // drawingRect.left += 15;
-        // drawingRect.top += mChannelInfoTitleSize + mChannelLayoutPadding;
-        // drawingRect.right = getWidth();
-        // canvas.font = "bold " + mChannelInfoTitleSize + "px Moonstone";
-        // canvas.textAlign = 'left';
-        // canvas.fillText(canvasUtils.getShortenedText(canvas, channel.getName(), drawingRect),
-        //     drawingRect.left, drawingRect.top);
+        //drawingRect.left += 20;
+        drawingRect.top = getHeight() / 2 - mChannelInfoTitleSize + mChannelInfoTitleSize / 2 + mChannelLayoutPadding;
+        drawingRect.right = drawingRect.left + drawingRect.height + 50;
+        canvas.font = 'bold ' + 25 + 'px Moonstone';
+        canvas.textAlign = 'left';
+        canvas.fillStyle = mChannelLayoutTitleTextColor;
+        canvas.fillText(CanvasUtils.getShortenedText(canvas, channel.getName(), drawingRect.width), drawingRect.left, drawingRect.top);
 
         // channel logo
-        drawingRect.left += 20;
-        drawingRect.top = 0;
-        drawingRect.right = drawingRect.left + drawingRect.height + 50;
+        //drawingRect.left += 20;
+        //drawingRect.top = 0;
+        //drawingRect.right = drawingRect.left + drawingRect.height + 50;
         //drawingRect.bottom = getHeight();
-        canvas.textAlign = 'left';
-        const imageURL = channel.getImageURL();
-        const image = imageURL && imageCache.get(imageURL);
-        if (image !== undefined) {
-            drawingRect = getDrawingRectForChannelImage(drawingRect, image);
-            canvas.drawImage(image, drawingRect.left, drawingRect.top, drawingRect.width, drawingRect.height);
-        }
+        //canvas.textAlign = 'left';
+        //const imageURL = channel.getImageURL();
+        //const image = imageURL && imageCache.get(imageURL);
+        //if (image !== undefined) {
+        //    drawingRect = getDrawingRectForChannelImage(drawingRect, image);
+        //    canvas.drawImage(image, drawingRect.left, drawingRect.top, drawingRect.width, drawingRect.height);
+        //}
 
         // channel event
         drawingRect.left += drawingRect.right + 20;
@@ -297,28 +297,6 @@ const ChannelInfo = (props: { unmount: () => void }) => {
                 channelEventProgressRect.height
             );
         }
-    };
-
-    const getDrawingRectForChannelImage = (drawingRect: Rect, image: HTMLImageElement) => {
-        const imageWidth = image.width;
-        const imageHeight = image.height;
-        const imageRatio = imageHeight / imageWidth;
-
-        const rectWidth = drawingRect.right - drawingRect.left;
-        const rectHeight = drawingRect.bottom - drawingRect.top;
-
-        // Keep aspect ratio.
-        if (imageWidth > imageHeight) {
-            const padding = (rectHeight - rectWidth * imageRatio) / 2;
-            drawingRect.top += padding;
-            drawingRect.bottom -= padding;
-        } else if (imageWidth <= imageHeight) {
-            const padding = (rectWidth - rectHeight / imageRatio) / 2;
-            drawingRect.left += padding;
-            drawingRect.right -= padding;
-        }
-
-        return drawingRect;
     };
 
     const getWidth = () => {

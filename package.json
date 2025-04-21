@@ -1,15 +1,17 @@
 {
     "name": "webos-tvheadend",
-    "version": "0.8.3",
+    "version": "1.0.0",
     "private": true,
     "homepage": "./",
     "dependencies": {
-        "@enact/moonstone": "^4.5.4",
-        "@procot/webostv": "^1.2.5",
-        "ilib": "^14.18.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-scripts": "5.0.1"
+        "@enact/moonstone": "^4.5.6",
+        "@procot/webostv": "git://github.com/procot/webostv.git",
+        "core-js": "^3.41.0",
+        "ilib": "^14.21.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-scripts": "5.0.1",
+        "regenerator-runtime": "^0.14.1"
     },
     "scripts": {
         "start": "react-scripts start",

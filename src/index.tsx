@@ -1,3 +1,6 @@
+import 'core-js/stable'; // required for webOS 3.0 support
+import 'regenerator-runtime/runtime'; // required for webOS 3.0 support
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

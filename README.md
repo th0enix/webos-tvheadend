@@ -1,3 +1,9 @@
+# ---th0enix Build---
+* Update dependencies
+* Remove background, splash, icons
+* Added extended request timeout & video preload disable (MartB)
+* Right key opens Menu in TV-State (Special non-colorbutton remotes)
+
 # webos-tvheadend
 * This is a WebOS Client for TVHeadend
 * It can currently only be installed using the Developer App or Homebrew
