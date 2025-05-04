@@ -9,8 +9,8 @@ import AppContext, { AppVisibilityState } from '../AppContext';
 import '../styles/app.css';
 import StorageHelper from '../utils/StorageHelper';
 import EPGEvent from '../models/EPGEvent';
-import Spinner from '@enact/moonstone/Spinner';
-import { Panel } from '@enact/moonstone/Panels';
+//import Spinner from '@enact/moonstone/Spinner';
+//import { Panel } from '@enact/moonstone/Panels';
 import { AppViewState } from '../App';
 
 export enum State {
@@ -38,7 +38,7 @@ const TV = () => {
     const audioTracksRef = useRef<AudioTrackList>();
     const textTracksRef = useRef<TextTrackList>();
 
-    const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+    //const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const [state, setState] = useState<State>(State.CHANNEL_INFO);
     const [channelNumberText, setChannelNumberText] = useState('');
 
@@ -89,6 +89,11 @@ const TV = () => {
             case 38: // arrow up
                 event.stopPropagation();
                 setState(State.CHANNEL_LIST);
+                break;
+            case 39:
+                if (state === State.CHANNEL_SETTINGS) {
+                    event.stopPropagation();
+                }
                 break;
             case 406: // blue button show epg
             case 66: // keyboard 'b'
@@ -259,7 +264,7 @@ const TV = () => {
         if (!videoElement) return;
 
         resetPlayer(videoElement);
-        setIsVideoPlaying(false);
+        //setIsVideoPlaying(false);
 
         //const options = {
         //    mediaTransportType: 'URI'
@@ -283,11 +288,12 @@ const TV = () => {
         // workarund for promise not beeing returned in webos 3.x
         if (playPromise !== undefined) {
             playPromise
-                .then(() => setIsVideoPlaying(true))
+                .then()
+                //.then(() => setIsVideoPlaying(true))
                 .catch((error) => console.log('channel switched before it could be played', error));
-        } else {
-            setIsVideoPlaying(true);
-        }
+        } //else {
+            //setIsVideoPlaying(true);
+        //}
     };
 
     const getWidth = () => window.innerWidth;
@@ -390,13 +396,14 @@ const TV = () => {
             onKeyDown={handleKeyPress}
             onWheel={handleScrollWheel}
             onClick={handleClick}
-            className={isVideoPlaying ? 'tv playing' : 'tv loading'}
+            /* className={isVideoPlaying ? 'tv playing' : 'tv loading'} */
+            className="tv"
         >
             {channelNumberText !== '' && (
                 <ChannelHeader channelNumberText={channelNumberText} unmount={() => setChannelNumberText('')} />
             )}
 
-            {!isVideoPlaying && <Spinner centered component={Panel}></Spinner>}
+            {/*//insert*/}
 
             {state === State.CHANNEL_SETTINGS && (
                 <ChannelSettings

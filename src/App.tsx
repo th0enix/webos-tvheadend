@@ -12,9 +12,9 @@ import Menu, { MenuItem } from './components/Menu';
 export enum AppViewState {
     TV,
     SETTINGS,
-    RECORDINGS,
-    HELP,
-    CONTACT
+    RECORDINGS
+//    HELP,
+//    CONTACT
 }
 
 const App = () => {
@@ -55,19 +55,19 @@ const App = () => {
             label: 'Setup',
             action: () => updateAppViewState(AppViewState.SETTINGS),
             isActive: appViewState === AppViewState.SETTINGS
-        },
-        {
-            icon: 'denselist',
-            label: 'Help',
-            action: () => console.log('not yet available') /*action: () => updateAppViewState(AppViewState.HELP)*/,
-            isActive: false
-        },
-        {
-            icon: 'circle',
-            label: 'Contact',
-            action: () => console.log('not yet available') /*action: () => updateAppViewState(AppViewState.CONTACT)*/,
-            isActive: false
         }
+//        {
+//            icon: 'denselist',
+//            label: 'Help',
+//            action: () => console.log('not yet available') /*action: () => updateAppViewState(AppViewState.HELP)*/,
+//            isActive: false
+//        },
+//        {
+//            icon: 'circle',
+//            label: 'Contact',
+//            action: () => console.log('not yet available') /*action: () => updateAppViewState(AppViewState.CONTACT)*/,
+//            isActive: false
+//        }
     ];
 
     const updateAppViewState = (appViewState: AppViewState) => {
@@ -173,6 +173,7 @@ const App = () => {
             case 404: // green button
             case 71: //'g'
             case 39: // right key for special remotes
+                if (appViewState === AppViewState.SETTINGS) break; // Menu is not opened when in settings state
                 event.stopPropagation();
                 setMenuState(!menuState);
                 break;

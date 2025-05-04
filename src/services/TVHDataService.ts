@@ -402,6 +402,7 @@ export default class TVHDataService {
             if (result) {
                 const parserResult = M3UParser.parse(result);
                 parserResult.items.forEach((item) => {
+                    if (!item.channelNumber) return; // skip if channel has no number
                     const channel = new EPGChannel(
                         item.logoUrl && item.logoUrl.length > 0 ? new URL(item.logoUrl) : undefined,
                         item.channelName,
